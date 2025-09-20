@@ -78,15 +78,33 @@ body {
   left: 100%;
 }
 
+/* Sidebar Animations */
+.sidebar-item {
+  transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+  transform: translateX(8px);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
+  }
+  
+  .sidebar-drawer {
+    width: 240px !important;
   }
 }
 
 @media (max-width: 480px) {
   .dashboard-container {
     padding: 8px !important;
+  }
+  
+  .sidebar-drawer {
+    width: 200px !important;
   }
 }

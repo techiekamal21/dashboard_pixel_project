@@ -21,6 +21,7 @@ import {
   Settings,
   DarkMode,
   LightMode,
+  Menu,
 } from '@mui/icons-material';
 import { useDarkMode } from '../App';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -28,9 +29,12 @@ import MetricCard from './MetricCard';
 import ChartCard from './ChartCard';
 import RecentActivity from './RecentActivity';
 import TopProducts from './TopProducts';
+import Sidebar from './Sidebar';
 
 const Dashboard = () => {
   const { darkMode, setDarkMode } = useDarkMode();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [selectedMenuItem, setSelectedMenuItem] = useState('dashboard');
   const [metrics, setMetrics] = useState({
     revenue: { value: 0, target: 124500, change: 12.5 },
     users: { value: 0, target: 8420, change: 8.2 },
@@ -75,148 +79,143 @@ const Dashboard = () => {
   };
 
   return (
-    <Box className="dashboard-container" sx={{ 
-      background: darkMode 
-        ? 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)' 
-        : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      minHeight: '100vh'
-    }}>
-      {/* Header */}
-      <AppBar position="static" elevation={0} sx={{ background: 'transparent' }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
-            Dashboard
-          </Typography>
-          <IconButton 
-            color="inherit" 
-            onClick={() => setDarkMode(!darkMode)}
-            sx={{ mr: 1 }}
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      {/* Sidebar */}
+      <Sidebar 
+        open={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
+        selectedItem={selectedMenuItem}
+        onItemSelect={setSelectedMenuItem}
+      />
+      
+      {/* Main Content */}
+      <Box 
+        component="main" 
+        sx={{ 
+          flexGrow: 1,
+          background: darkMode 
+            ? 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)' 
+            : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          minHeight: '100vh',
+          transition: 'margin 0.3s ease',
+          marginLeft: sidebarOpen ? 0 : '-280px',
+        }}
+      >
+        {/* Header */}
+        <AppBar position="static" elevation={0} sx={{ background: 'transparent' }}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              sx={{ mr: 2 }}
+            >
+              <Menu />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
+              Dashboard
+            </Typography>
+            <IconButton 
+              color="inherit" 
+              onClick={() => setDarkMode(!darkMode)}
+              sx={{ mr: 1 }}
+            >
+              {darkMode ? <LightMode /> : <DarkMode />}
+            </IconButton>
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="error">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit">
+              <Settings />
+            </IconButton>
+            <Avatar sx={{ ml: 2, bgcolor: 'rgba(255,255,255,0.2)' }}>
+              JD
+            </Avatar>
+          </Toolbar>
+        </AppBar>
+
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            {darkMode ? <LightMode /> : <DarkMode />}
-          </IconButton>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="error">
-              <Notifications />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <Settings />
-          </IconButton>
-          <Avatar sx={{ ml: 2, bgcolor: 'rgba(255,255,255,0.2)' }}>
-            JD
-          </Avatar>
-        </Toolbar>
-      </AppBar>
+            {/* Metrics Row */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid item xs={12} sm={6} md={3}>
+                <motion.div variants={itemVariants}>
+                  <MetricCard
+                    title="Total Revenue"
+                    value={metrics.revenue.value}
+                    change={metrics.revenue.change}
+                    icon={<AttachMoney />}
+                    color="#4caf50"
+                    prefix="$"
+                  />
+                </motion.div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <motion.div variants={itemVariants}>
+                  <MetricCard
+                    title="Active Users"
+                    value={metrics.users.value}
+                    change={metrics.users.change}
+                    icon={<People />}
+                    color="#2196f3"
+                  />
+                </motion.div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <motion.div variants={itemVariants}>
+                  <MetricCard
+                    title="Total Orders"
+                    value={metrics.orders.value}
+                    change={metrics.orders.change}
+                    icon={<ShoppingCart />}
+                    color="#ff9800"
+                  />
+                </motion.div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <motion.div variants={itemVariants}>
+                  <MetricCard
+                    title="Conversion Rate"
+                    value={metrics.conversion.value}
+                    change={metrics.conversion.change}
+                    icon={<TrendingUp />}
+                    color="#9c27b0"
+                    suffix="%"
+                  />
+                </motion.div>
+              </Grid>
+            </Grid>
 
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Metrics Row */}
-          <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={6} md={3}>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  title="Total Revenue"
-                  value={metrics.revenue.value}
-                  change={metrics.revenue.change}
-                  icon={<AttachMoney />}
-                  color="#4caf50"
-                  prefix="$"
-                />
-              </motion.div>
+            {/* Main Chart - Full Width */}
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              <Grid item xs={12}>
+                <motion.div variants={itemVariants}>
+                  <ChartCard />
+                </motion.div>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  title="Active Users"
-                  value={metrics.users.value}
-                  change={metrics.users.change}
-                  icon={<People />}
-                  color="#2196f3"
-                />
-              </motion.div>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  title="Total Orders"
-                  value={metrics.orders.value}
-                  change={metrics.orders.change}
-                  icon={<ShoppingCart />}
-                  color="#ff9800"
-                />
-              </motion.div>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <motion.div variants={itemVariants}>
-                <MetricCard
-                  title="Conversion Rate"
-                  value={metrics.conversion.value}
-                  change={metrics.conversion.change}
-                  icon={<TrendingUp />}
-                  color="#9c27b0"
-                  suffix="%"
-                />
-              </motion.div>
-            </Grid>
-          </Grid>
 
-          {/* Charts Row */}
-          <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} lg={8}>
-              <motion.div variants={itemVariants}>
-                <ChartCard />
-              </motion.div>
+            {/* Bottom Row - Products and Activity */}
+            <Grid container spacing={3}>
+              <Grid item xs={12} lg={6}>
+                <motion.div variants={itemVariants}>
+                  <TopProducts />
+                </motion.div>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <motion.div variants={itemVariants}>
+                  <RecentActivity />
+                </motion.div>
+              </Grid>
             </Grid>
-            <Grid item xs={12} lg={4}>
-              <motion.div variants={itemVariants}>
-                <TopProducts />
-              </motion.div>
-            </Grid>
-          </Grid>
-
-          {/* Activity Row */}
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <motion.div variants={itemVariants}>
-                <RecentActivity />
-              </motion.div>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <motion.div variants={itemVariants}>
-                <Card sx={{ height: '100%' }}>
-                  <CardContent>
-                    <Typography variant="h6" fontWeight="600" mb={3}>
-                      Quick Stats
-                    </Typography>
-                    <Box display="flex" flexDirection="column" gap={2}>
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="body2">Today's Revenue</Typography>
-                        <Typography variant="h6" color="primary">$12,450</Typography>
-                      </Box>
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="body2">New Customers</Typography>
-                        <Typography variant="h6" color="success.main">+24</Typography>
-                      </Box>
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="body2">Pending Orders</Typography>
-                        <Typography variant="h6" color="warning.main">18</Typography>
-                      </Box>
-                      <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography variant="body2">Support Tickets</Typography>
-                        <Typography variant="h6" color="error.main">3</Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </Grid>
-          </Grid>
-        </motion.div>
-      </Container>
+          </motion.div>
+        </Container>
+      </Box>
     </Box>
   );
 };
