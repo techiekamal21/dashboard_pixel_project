@@ -17,13 +17,13 @@ const MiniSidebar = ({ selectedItem, onItemSelect, onExpand }) => {
   const { darkMode } = useDarkMode();
   
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon /> },
+    { id: 'dashboard', label: 'Home', icon: <DashboardIcon /> },
     { id: 'analytics', label: 'Analytics', icon: <Analytics /> },
+    { id: 'transactions', label: 'Transactions', icon: <Assessment /> },
     { id: 'customers', label: 'Customers', icon: <People /> },
     { id: 'orders', label: 'Orders', icon: <ShoppingCart /> },
     { id: 'products', label: 'Products', icon: <Inventory /> },
-    { id: 'reports', label: 'Reports', icon: <Assessment /> },
-    { id: 'trends', label: 'Trends', icon: <TrendingUp /> },
+    { id: 'reports', label: 'Reports', icon: <TrendingUp /> },
   ];
 
   return (

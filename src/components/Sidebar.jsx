@@ -29,13 +29,14 @@ import { useDarkMode } from '../App';
 const Sidebar = ({ open, onToggle, selectedItem, onItemSelect }) => {
   const { darkMode } = useDarkMode();
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon />, active: true },
+    { id: 'dashboard', label: 'Home', icon: <DashboardIcon />, active: true },
     { id: 'analytics', label: 'Analytics', icon: <Analytics /> },
+    { id: 'transactions', label: 'Transactions', icon: <Assessment /> },
     { id: 'customers', label: 'Customers', icon: <People /> },
     { id: 'orders', label: 'Orders', icon: <ShoppingCart /> },
     { id: 'products', label: 'Products', icon: <Inventory /> },
-    { id: 'reports', label: 'Reports', icon: <Assessment /> },
-    { id: 'trends', label: 'Trends', icon: <TrendingUp /> },
+    { id: 'reports', label: 'Reports', icon: <TrendingUp /> },
+    { id: 'settings', label: 'Settings', icon: <Settings /> },
   ];
 
   const drawerWidth = 280;
@@ -51,20 +52,38 @@ const Sidebar = ({ open, onToggle, selectedItem, onItemSelect }) => {
           width: drawerWidth,
           boxSizing: 'border-box',
           background: darkMode 
-            ? 'rgba(30, 30, 30, 0.95)' 
-            : 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(10px)',
+            ? '#1a1a1a' 
+            : '#ffffff',
           border: 'none',
-          boxShadow: darkMode 
-            ? '0 4px 20px rgba(0, 0, 0, 0.3)' 
-            : '0 4px 20px rgba(0, 0, 0, 0.1)',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+          borderRight: darkMode 
+            ? '1px solid rgba(255,255,255,0.1)' 
+            : '1px solid rgba(0,0,0,0.08)',
         },
       }}
     >
-      <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography variant="h6" fontWeight="600" color="primary">
-          📊 Dashboard
-        </Typography>
+      <Box sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box 
+            sx={{ 
+              width: 32, 
+              height: 32, 
+              borderRadius: '50%', 
+              background: 'linear-gradient(135deg, #4CAF50, #45a049)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}
+          >
+            D
+          </Box>
+          <Typography variant="h6" fontWeight="600" sx={{ color: darkMode ? 'white' : '#333' }}>
+            Dashboard
+          </Typography>
+        </Box>
         <IconButton onClick={onToggle} size="small">
           <ChevronLeft />
         </IconButton>

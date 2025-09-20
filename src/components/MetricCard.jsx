@@ -11,7 +11,6 @@ const MetricCard = ({ title, value, change, icon, color, prefix = '', suffix = '
     <motion.div
       whileHover={{ 
         scale: 1.02,
-        rotateY: 5,
         transition: { duration: 0.2 }
       }}
       whileTap={{ scale: 0.98 }}
@@ -20,7 +19,16 @@ const MetricCard = ({ title, value, change, icon, color, prefix = '', suffix = '
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card sx={{ height: '100%', position: 'relative', overflow: 'visible' }}>
+      <Card sx={{ 
+        height: '100%', 
+        position: 'relative', 
+        overflow: 'visible',
+        border: 'none',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+        '&:hover': {
+          boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+        }
+      }}>
         <CardContent>
           <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
             <Box
