@@ -104,7 +104,7 @@ const ChartCard = () => {
           </ToggleButtonGroup>
         </Box>
 
-        <Box className="chart-container" sx={{ height: 400, width: '100%' }}>
+        <Box className="chart-container" sx={{ height: { xs: 300, lg: 450 }, width: '100%' }}>
           <ResponsiveContainer width="100%" height="100%">
             <motion.div
               key={chartType}

@@ -31,7 +31,7 @@ const RecentActivity = () => {
       id: 1,
       type: 'order',
       title: 'New order received',
-      description: 'Order #12345 from John Doe',
+      description: 'Order #12345 from techiekamal',
       time: '2 minutes ago',
       icon: <ShoppingCart />,
       color: '#4caf50',
@@ -41,7 +41,7 @@ const RecentActivity = () => {
       id: 2,
       type: 'user',
       title: 'New user registered',
-      description: 'Sarah Johnson joined the platform',
+      description: 'techiekamal joined the platform',
       time: '15 minutes ago',
       icon: <Person />,
       color: '#2196f3',
@@ -79,7 +79,7 @@ const RecentActivity = () => {
       id: 6,
       type: 'user',
       title: 'User feedback received',
-      description: '5-star review from Mike Wilson',
+      description: '5-star review from techiekamal',
       time: '4 hours ago',
       icon: <Person />,
       color: '#2196f3',
@@ -111,9 +111,12 @@ const RecentActivity = () => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+    <Card sx={{ 
+      border: 'none',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    }}>
+      <CardContent sx={{ p: 2 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6" fontWeight="600">
             Recent Activity
           </Typography>

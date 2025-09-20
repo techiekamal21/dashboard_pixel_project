@@ -137,7 +137,7 @@ const Dashboard = () => {
             </IconButton>
             <Box>
               <Typography variant="h5" fontWeight="600" sx={{ color: darkMode ? 'white' : '#333' }}>
-                Welcome John Doe! 👋
+                Welcome techiekamal! 👋
               </Typography>
               <Typography variant="body2" sx={{ color: darkMode ? '#b3b3b3' : '#666', mt: 0.5 }}>
                 Here's what's happening with your business today
@@ -184,91 +184,165 @@ const Dashboard = () => {
                 }
               }}
             >
-              JD
+              TK
             </Avatar>
           </Box>
         </Box>
 
         {selectedMenuItem === 'dashboard' ? (
-          <Box sx={{ p: 3, width: '100%', height: '100%' }}>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              {/* Metrics Row */}
-              <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div variants={itemVariants}>
-                    <MetricCard
-                      title="Total Revenue"
-                      value={metrics.revenue.value}
-                      change={metrics.revenue.change}
-                      icon={<AttachMoney />}
-                      color="#4caf50"
-                      prefix="$"
-                    />
-                  </motion.div>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div variants={itemVariants}>
-                    <MetricCard
-                      title="Active Users"
-                      value={metrics.users.value}
-                      change={metrics.users.change}
-                      icon={<People />}
-                      color="#2196f3"
-                    />
-                  </motion.div>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div variants={itemVariants}>
-                    <MetricCard
-                      title="Total Orders"
-                      value={metrics.orders.value}
-                      change={metrics.orders.change}
-                      icon={<ShoppingCart />}
-                      color="#ff9800"
-                    />
-                  </motion.div>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div variants={itemVariants}>
-                    <MetricCard
-                      title="Conversion Rate"
-                      value={metrics.conversion.value}
-                      change={metrics.conversion.change}
-                      icon={<TrendingUp />}
-                      color="#9c27b0"
-                      suffix="%"
-                    />
-                  </motion.div>
-                </Grid>
-              </Grid>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            height: 'calc(100vh - 80px)', 
+            width: '100%',
+            overflow: 'hidden'
+          }}>
+            {/* Main Content Area */}
+            <Box sx={{ 
+              display: 'flex', 
+              flex: 1, 
+              gap: 3, 
+              p: 3,
+              overflow: 'hidden'
+            }}>
+              {/* Left Side - Main Dashboard */}
+              <Box sx={{ 
+                flex: 1, 
+                display: 'flex', 
+                flexDirection: 'column',
+                gap: 3,
+                overflow: 'auto'
+              }}>
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {/* Metrics Row */}
+                  <Grid container spacing={3} sx={{ mb: 3 }}>
+                    <Grid item xs={12} sm={6} lg={3}>
+                      <motion.div variants={itemVariants}>
+                        <MetricCard
+                          title="Total Revenue"
+                          value={metrics.revenue.value}
+                          change={metrics.revenue.change}
+                          icon={<AttachMoney />}
+                          color="#4caf50"
+                          prefix="$"
+                        />
+                      </motion.div>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={3}>
+                      <motion.div variants={itemVariants}>
+                        <MetricCard
+                          title="Active Users"
+                          value={metrics.users.value}
+                          change={metrics.users.change}
+                          icon={<People />}
+                          color="#2196f3"
+                        />
+                      </motion.div>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={3}>
+                      <motion.div variants={itemVariants}>
+                        <MetricCard
+                          title="Total Orders"
+                          value={metrics.orders.value}
+                          change={metrics.orders.change}
+                          icon={<ShoppingCart />}
+                          color="#ff9800"
+                        />
+                      </motion.div>
+                    </Grid>
+                    <Grid item xs={12} sm={6} lg={3}>
+                      <motion.div variants={itemVariants}>
+                        <MetricCard
+                          title="Conversion Rate"
+                          value={metrics.conversion.value}
+                          change={metrics.conversion.change}
+                          icon={<TrendingUp />}
+                          color="#9c27b0"
+                          suffix="%"
+                        />
+                      </motion.div>
+                    </Grid>
+                  </Grid>
 
-              {/* Main Chart - Full Width */}
-              <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12}>
-                  <motion.div variants={itemVariants}>
-                    <ChartCard />
-                  </motion.div>
-                </Grid>
-              </Grid>
+                  {/* Main Chart - Takes remaining space */}
+                  <Box sx={{ flex: 1, minHeight: 400 }}>
+                    <motion.div variants={itemVariants}>
+                      <ChartCard />
+                    </motion.div>
+                  </Box>
+                </motion.div>
 
-              {/* Bottom Row - Products and Activity */}
-              <Grid container spacing={3}>
-                <Grid item xs={12} lg={6}>
-                  <motion.div variants={itemVariants}>
-                    <TopProducts />
-                  </motion.div>
-                </Grid>
-                <Grid item xs={12} lg={6}>
-                  <motion.div variants={itemVariants}>
-                    <RecentActivity />
-                  </motion.div>
-                </Grid>
-              </Grid>
-            </motion.div>
+                {/* Mobile - Bottom Row for smaller screens */}
+                <Box sx={{ display: { xs: 'block', lg: 'none' } }}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                      <motion.div variants={itemVariants}>
+                        <TopProducts />
+                      </motion.div>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <motion.div variants={itemVariants}>
+                        <RecentActivity />
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+
+              {/* Right Side - Top Products and Recent Activity */}
+              <Box sx={{ 
+                width: { xs: '100%', lg: 350 }, 
+                display: { xs: 'none', lg: 'flex' },
+                flexDirection: 'column',
+                gap: 3,
+                overflow: 'auto'
+              }}>
+                <motion.div variants={itemVariants}>
+                  <TopProducts />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <RecentActivity />
+                </motion.div>
+              </Box>
+            </Box>
+
+            {/* Footer */}
+            <Box sx={{ 
+              borderTop: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
+              background: darkMode ? '#1a1a1a' : '#ffffff',
+              px: 3,
+              py: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  color: darkMode ? '#b3b3b3' : '#666',
+                  textAlign: 'center'
+                }}
+              >
+                Designed and developed by{' '}
+                <Box 
+                  component="span" 
+                  sx={{ 
+                    color: '#4CAF50', 
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      textDecoration: 'underline'
+                    }
+                  }}
+                >
+                  techiekamal
+                </Box>
+              </Typography>
+            </Box>
           </Box>
         ) : (
           // Other menu items content

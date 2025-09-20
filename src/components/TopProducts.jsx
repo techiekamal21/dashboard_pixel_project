@@ -79,9 +79,13 @@ const TopProducts = () => {
   };
 
   return (
-    <Card sx={{ height: '100%' }}>
-      <CardContent>
-        <Typography variant="h6" fontWeight="600" mb={3}>
+    <Card sx={{ 
+      height: '100%',
+      border: 'none',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    }}>
+      <CardContent sx={{ p: 2 }}>
+        <Typography variant="h6" fontWeight="600" mb={2}>
           Top Products
         </Typography>
 
