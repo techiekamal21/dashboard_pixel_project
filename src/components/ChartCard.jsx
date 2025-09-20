@@ -126,6 +126,7 @@ const ChartCard = () => {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fontSize: 12, fill: '#666' }}
+                  tickFormatter={(value) => chartType === 'revenue' ? `$${value/1000}k` : `${value/1000}k`}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Area
@@ -137,12 +138,13 @@ const ChartCard = () => {
                   dot={{ fill: chartColor, strokeWidth: 2, r: 4 }}
                   activeDot={{ r: 6, stroke: chartColor, strokeWidth: 2 }}
                 />
-                <Line
+                <Area
                   type="monotone"
                   dataKey="previous"
                   stroke="#ccc"
                   strokeWidth={2}
                   strokeDasharray="5 5"
+                  fill="none"
                   dot={false}
                 />
               </AreaChart>

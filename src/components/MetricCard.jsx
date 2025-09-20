@@ -9,9 +9,16 @@ const MetricCard = ({ title, value, change, icon, color, prefix = '', suffix = '
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ 
+        scale: 1.02,
+        rotateY: 5,
+        transition: { duration: 0.2 }
+      }}
       whileTap={{ scale: 0.98 }}
       className="metric-card"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Card sx={{ height: '100%', position: 'relative', overflow: 'visible' }}>
         <CardContent>

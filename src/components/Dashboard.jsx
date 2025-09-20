@@ -19,7 +19,10 @@ import {
   AttachMoney,
   Notifications,
   Settings,
+  DarkMode,
+  LightMode,
 } from '@mui/icons-material';
+import { useDarkMode } from '../App';
 import { motion, AnimatePresence } from 'framer-motion';
 import MetricCard from './MetricCard';
 import ChartCard from './ChartCard';
@@ -27,6 +30,7 @@ import RecentActivity from './RecentActivity';
 import TopProducts from './TopProducts';
 
 const Dashboard = () => {
+  const { darkMode, setDarkMode } = useDarkMode();
   const [metrics, setMetrics] = useState({
     revenue: { value: 0, target: 124500, change: 12.5 },
     users: { value: 0, target: 8420, change: 8.2 },
@@ -71,13 +75,25 @@ const Dashboard = () => {
   };
 
   return (
-    <Box className="dashboard-container">
+    <Box className="dashboard-container" sx={{ 
+      background: darkMode 
+        ? 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)' 
+        : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      minHeight: '100vh'
+    }}>
       {/* Header */}
       <AppBar position="static" elevation={0} sx={{ background: 'transparent' }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
             Dashboard
           </Typography>
+          <IconButton 
+            color="inherit" 
+            onClick={() => setDarkMode(!darkMode)}
+            sx={{ mr: 1 }}
+          >
+            {darkMode ? <LightMode /> : <DarkMode />}
+          </IconButton>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="error">
               <Notifications />
@@ -164,9 +180,38 @@ const Dashboard = () => {
 
           {/* Activity Row */}
           <Grid container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={12} lg={8}>
               <motion.div variants={itemVariants}>
                 <RecentActivity />
+              </motion.div>
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <motion.div variants={itemVariants}>
+                <Card sx={{ height: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight="600" mb={3}>
+                      Quick Stats
+                    </Typography>
+                    <Box display="flex" flexDirection="column" gap={2}>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2">Today's Revenue</Typography>
+                        <Typography variant="h6" color="primary">$12,450</Typography>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2">New Customers</Typography>
+                        <Typography variant="h6" color="success.main">+24</Typography>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2">Pending Orders</Typography>
+                        <Typography variant="h6" color="warning.main">18</Typography>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="body2">Support Tickets</Typography>
+                        <Typography variant="h6" color="error.main">3</Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
               </motion.div>
             </Grid>
           </Grid>
