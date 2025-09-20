@@ -82,8 +82,13 @@ const ChartCard = () => {
   };
 
   return (
-    <Card sx={{ height: '100%' }}>
-      <CardContent>
+    <Card sx={{ 
+      height: '100%', 
+      width: '100%',
+      border: 'none',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+    }}>
+      <CardContent sx={{ p: 3 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
           <Typography variant="h6" fontWeight="600">
             Analytics Overview
@@ -99,7 +104,7 @@ const ChartCard = () => {
           </ToggleButtonGroup>
         </Box>
 
-        <Box className="chart-container" sx={{ height: 300 }}>
+        <Box className="chart-container" sx={{ height: 400, width: '100%' }}>
           <ResponsiveContainer width="100%" height="100%">
             <motion.div
               key={chartType}

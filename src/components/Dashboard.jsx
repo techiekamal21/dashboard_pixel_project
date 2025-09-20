@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container,
   Grid,
-  Card,
-  CardContent,
   Typography,
   Box,
-  AppBar,
-  Toolbar,
   IconButton,
   Avatar,
   Badge,
@@ -18,13 +13,12 @@ import {
   ShoppingCart,
   AttachMoney,
   Notifications,
-  Settings,
   DarkMode,
   LightMode,
   Menu,
 } from '@mui/icons-material';
 import { useDarkMode } from '../App';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import MetricCard from './MetricCard';
 import ChartCard from './ChartCard';
 import RecentActivity from './RecentActivity';
@@ -176,7 +170,7 @@ const Dashboard = () => {
         </Box>
 
         {selectedMenuItem === 'dashboard' ? (
-          <Container maxWidth="xl" sx={{ py: 4 }}>
+          <Box sx={{ p: 4, width: '100%' }}>
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -255,10 +249,10 @@ const Dashboard = () => {
                 </Grid>
               </Grid>
             </motion.div>
-          </Container>
+          </Box>
         ) : (
           // Other menu items content
-          <Container maxWidth="xl" sx={{ py: 4 }}>
+          <Box sx={{ p: 4, width: '100%' }}>
             <Box 
               sx={{ 
                 display: 'flex', 
@@ -285,7 +279,7 @@ const Dashboard = () => {
                 This section is ready for your content. Add your {selectedMenuItem} features here to complete your dashboard experience.
               </Typography>
             </Box>
-          </Container>
+          </Box>
         )}
       </Box>
     </Box>
