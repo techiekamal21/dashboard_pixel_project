@@ -30,10 +30,11 @@ import ChartCard from './ChartCard';
 import RecentActivity from './RecentActivity';
 import TopProducts from './TopProducts';
 import Sidebar from './Sidebar';
+import MiniSidebar from './MiniSidebar';
 
 const Dashboard = () => {
   const { darkMode, setDarkMode } = useDarkMode();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState('dashboard');
   const [metrics, setMetrics] = useState({
     revenue: { value: 0, target: 124500, change: 12.5 },
@@ -79,8 +80,8 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Sidebar */}
+    <Box sx={{ minHeight: '100vh' }}>
+      {/* Full Sidebar */}
       <Sidebar 
         open={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
@@ -88,17 +89,26 @@ const Dashboard = () => {
         onItemSelect={setSelectedMenuItem}
       />
       
+      {/* Mini Sidebar - shows when main sidebar is closed */}
+      {!sidebarOpen && (
+        <MiniSidebar 
+          selectedItem={selectedMenuItem}
+          onItemSelect={setSelectedMenuItem}
+          onExpand={() => setSidebarOpen(true)}
+        />
+      )}
+      
       {/* Main Content */}
       <Box 
         component="main" 
         sx={{ 
-          flexGrow: 1,
+          width: '100%',
+          paddingLeft: !sidebarOpen ? '60px' : 0,
           background: darkMode 
             ? 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)' 
             : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           minHeight: '100vh',
-          transition: 'margin 0.3s ease',
-          marginLeft: sidebarOpen ? 0 : '-280px',
+          transition: 'padding-left 0.3s ease',
         }}
       >
         {/* Header */}

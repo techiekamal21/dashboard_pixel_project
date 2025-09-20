@@ -24,8 +24,10 @@ import {
   ChevronLeft,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { useDarkMode } from '../App';
 
 const Sidebar = ({ open, onToggle, selectedItem, onItemSelect }) => {
+  const { darkMode } = useDarkMode();
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon />, active: true },
     { id: 'analytics', label: 'Analytics', icon: <Analytics /> },
@@ -40,19 +42,22 @@ const Sidebar = ({ open, onToggle, selectedItem, onItemSelect }) => {
 
   return (
     <Drawer
-      variant="persistent"
+      variant="temporary"
       anchor="left"
       open={open}
+      onClose={onToggle}
       sx={{
-        width: open ? drawerWidth : 0,
-        flexShrink: 0,
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
-          background: 'rgba(255, 255, 255, 0.95)',
+          background: darkMode 
+            ? 'rgba(30, 30, 30, 0.95)' 
+            : 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(10px)',
           border: 'none',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+          boxShadow: darkMode 
+            ? '0 4px 20px rgba(0, 0, 0, 0.3)' 
+            : '0 4px 20px rgba(0, 0, 0, 0.1)',
         },
       }}
     >
