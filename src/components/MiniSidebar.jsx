@@ -31,21 +31,46 @@ const MiniSidebar = ({ selectedItem, onItemSelect, onExpand }) => {
       sx={{
         position: 'fixed',
         left: 0,
-        top: 64,
+        top: 0,
         width: 60,
-        height: 'calc(100vh - 64px)',
+        height: '100vh',
         background: darkMode 
-          ? 'rgba(30, 30, 30, 0.9)' 
-          : 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(10px)',
-        borderRight: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+          ? '#1a1a1a' 
+          : '#ffffff',
+        borderRight: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         py: 2,
         zIndex: 1000,
+        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
       }}
     >
+      {/* Logo Area */}
+      <Box 
+        sx={{ 
+          width: 40, 
+          height: 40, 
+          borderRadius: '50%', 
+          background: 'linear-gradient(135deg, #4CAF50, #45a049)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          mb: 3,
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease',
+          '&:hover': {
+            transform: 'scale(1.1)',
+          }
+        }}
+        onClick={onExpand}
+      >
+        D
+      </Box>
+      
       {menuItems.map((item, index) => (
         <motion.div
           key={item.id}

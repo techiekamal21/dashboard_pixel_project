@@ -17,6 +17,8 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
+    "@mui/x-date-pickers": "^8.11.3",
+    "dayjs": "^1.11.18",
     "framer-motion": "^12.23.16",
     "react": "^19.1.1",
     "react-countup": "^6.5.3",

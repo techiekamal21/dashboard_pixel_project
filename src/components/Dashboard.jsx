@@ -25,6 +25,7 @@ import RecentActivity from './RecentActivity';
 import TopProducts from './TopProducts';
 import Sidebar from './Sidebar';
 import MiniSidebar from './MiniSidebar';
+import DateRangePicker from './DateRangePicker';
 
 const Dashboard = () => {
   const { darkMode, setDarkMode } = useDarkMode();
@@ -74,7 +75,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', overflow: 'hidden' }}>
       {/* Full Sidebar */}
       <Sidebar 
         open={sidebarOpen}
@@ -83,24 +84,33 @@ const Dashboard = () => {
         onItemSelect={setSelectedMenuItem}
       />
       
-      {/* Mini Sidebar - shows when main sidebar is closed */}
-      {!sidebarOpen && (
-        <MiniSidebar 
-          selectedItem={selectedMenuItem}
-          onItemSelect={setSelectedMenuItem}
-          onExpand={() => setSidebarOpen(true)}
-        />
-      )}
+      {/* Mini Sidebar - always visible when main sidebar is closed */}
+      <Box
+        sx={{
+          width: sidebarOpen ? 0 : '60px',
+          transition: 'width 0.3s ease',
+          overflow: 'hidden',
+        }}
+      >
+        {!sidebarOpen && (
+          <MiniSidebar 
+            selectedItem={selectedMenuItem}
+            onItemSelect={setSelectedMenuItem}
+            onExpand={() => setSidebarOpen(true)}
+          />
+        )}
+      </Box>
       
-      {/* Main Content */}
+      {/* Main Content - Full Width */}
       <Box 
         component="main" 
         sx={{ 
           flexGrow: 1,
-          paddingLeft: !sidebarOpen ? '60px' : 0,
+          width: sidebarOpen ? 'calc(100vw - 280px)' : 'calc(100vw - 60px)',
           background: darkMode ? '#121212' : '#f8f9fa',
           minHeight: '100vh',
-          transition: 'padding-left 0.3s ease',
+          transition: 'width 0.3s ease',
+          overflow: 'auto',
         }}
       >
         {/* Header */}
@@ -136,41 +146,51 @@ const Dashboard = () => {
           </Box>
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box sx={{ 
-              background: darkMode ? '#2a2a2a' : '#f0f0f0', 
-              px: 2, 
-              py: 1, 
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1
-            }}>
-              <Typography variant="body2" sx={{ color: darkMode ? '#b3b3b3' : '#666' }}>
-                📅 This Week
-              </Typography>
-              <Typography variant="body2" fontWeight="500" sx={{ color: darkMode ? 'white' : '#333' }}>
-                Sep 15 - Sep 21
-              </Typography>
-            </Box>
+            <DateRangePicker />
             <IconButton 
               onClick={() => setDarkMode(!darkMode)}
-              sx={{ color: darkMode ? 'white' : '#333' }}
+              sx={{ 
+                color: darkMode ? 'white' : '#333',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                }
+              }}
             >
               {darkMode ? <LightMode /> : <DarkMode />}
             </IconButton>
-            <IconButton sx={{ color: darkMode ? 'white' : '#333' }}>
+            <IconButton 
+              sx={{ 
+                color: darkMode ? 'white' : '#333',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  backgroundColor: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                }
+              }}
+            >
               <Badge badgeContent={4} color="error">
                 <Notifications />
               </Badge>
             </IconButton>
-            <Avatar sx={{ bgcolor: '#4CAF50', width: 36, height: 36 }}>
+            <Avatar 
+              sx={{ 
+                bgcolor: '#4CAF50', 
+                width: 36, 
+                height: 36,
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                }
+              }}
+            >
               JD
             </Avatar>
           </Box>
         </Box>
 
         {selectedMenuItem === 'dashboard' ? (
-          <Box sx={{ p: 4, width: '100%' }}>
+          <Box sx={{ p: 3, width: '100%', height: '100%' }}>
             <motion.div
               variants={containerVariants}
               initial="hidden"
